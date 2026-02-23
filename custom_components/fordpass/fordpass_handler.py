@@ -1479,6 +1479,11 @@ class FordpassDataHandler:
         await vehicle.request_update()
         await coordinator.async_request_refresh_force_classic_requests()
 
+    async def refresh_energy_transfer_logs(coordinator, vehicle):
+        success = await vehicle.update_energy_transfer_logs_int()
+        if success and coordinator is not None:
+            coordinator.async_set_updated_data(vehicle._data_container)
+
     async def lock_vehicle(coordinator, vehicle):
         await vehicle.lock()
 
