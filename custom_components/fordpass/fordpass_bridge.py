@@ -1475,19 +1475,10 @@ class ConnectedFordPassVehicle:
         if self._energy_transfer_logs_supported:
             try:
                 _LOGGER.debug(f"{self.vli}_ws_debounce_update_energy_transfer_logs(): started")
-                # keep existing behavior: first refresh attempt after 3 minutes
+                # we will wait 3 minutes before we request the new energy_transfer_logs!
                 await asyncio.sleep(180)
                 if self._energy_transfer_logs_supported:
-                    _LOGGER.debug(f"{self.vli}_ws_debounce_update_energy_transfer_logs(): starting the first 'update_energy_transfer_logs_int()' update now")
-                    success = await self.update_energy_transfer_logs_int()
-                    if success and self.coordinator is not None:
-                        self.coordinator.async_set_updated_data(self._data_container)
-
-                # second retry after 10 minutes total since disconnect (180 + 420)
-                await asyncio.sleep(420)
-                latest_ev_connect_state = self._data_container.get(ROOT_METRICS, {}).get("xevPlugChargerStatus", {}).get("value", INTEGRATION_INIT).upper()
-                if self._energy_transfer_logs_supported and latest_ev_connect_state == "DISCONNECTED":
-                    _LOGGER.debug(f"{self.vli}_ws_debounce_update_energy_transfer_logs(): starting the second delayed 'update_energy_transfer_logs_int()' retry now")
+                    _LOGGER.debug(f"{self.vli}_ws_debounce_update_energy_transfer_logs(): starting the 'update_energy_transfer_logs_int()' update now")
                     success = await self.update_energy_transfer_logs_int()
                     if success and self.coordinator is not None:
                         self.coordinator.async_set_updated_data(self._data_container)

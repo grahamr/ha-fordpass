@@ -244,9 +244,6 @@
       },
       "msgdeletelast": {
         "name": "Messages: Delete Last"
-      },
-      "refreshenergytransferlogs": {
-        "name": "Refresh Energy Transfer Logs"
       }
     },
     "device_tracker": {

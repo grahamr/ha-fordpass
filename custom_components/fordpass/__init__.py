@@ -246,6 +246,12 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry):
     async def poll_api_service(call: ServiceCall):
         await coordinator.async_request_refresh_force_classic_requests()
 
+    async def refresh_energy_transfer_logs_service(call: ServiceCall):
+        _LOGGER.debug("Running Service 'refresh_energy_transfer_logs'")
+        success = await coordinator.bridge.update_energy_transfer_logs_int()
+        if success:
+            coordinator.async_set_updated_data(coordinator.bridge._data_container)
+
     async def handle_reload_service(call: ServiceCall):
         """Handle reload service call."""
         _LOGGER.debug(f"Reloading Integration")
@@ -274,6 +280,7 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry):
     hass.services.async_register(DOMAIN, "refresh_status", async_refresh_status_service)
     hass.services.async_register(DOMAIN, "clear_tokens", async_clear_tokens_service)
     hass.services.async_register(DOMAIN, "poll_api", poll_api_service)
+    hass.services.async_register(DOMAIN, "refresh_energy_transfer_logs", refresh_energy_transfer_logs_service)
     hass.services.async_register(DOMAIN, "reload", handle_reload_service)
     hass.services.async_register(DOMAIN, "delete_message", async_delete_message_service)
 
@@ -311,6 +318,7 @@ async def async_unload_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> 
         hass.services.async_remove(DOMAIN, "refresh_status")
         hass.services.async_remove(DOMAIN, "clear_tokens")
         hass.services.async_remove(DOMAIN, "poll_api")
+        hass.services.async_remove(DOMAIN, "refresh_energy_transfer_logs")
         hass.services.async_remove(DOMAIN, "reload")
         hass.services.async_remove(DOMAIN, "delete_message")
 

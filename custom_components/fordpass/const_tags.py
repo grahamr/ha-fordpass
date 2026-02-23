@@ -99,8 +99,6 @@ class Tag(ApiKey, Enum):
                                  press_fn=FordpassDataHandler.reload_data)
     REQUEST_REFRESH     = ApiKey(key="request_refresh",
                                  press_fn=FordpassDataHandler.request_update_and_reload)
-    REFRESH_ETL         = ApiKey(key="refreshEnergyTransferLogs",
-                                 press_fn=FordpassDataHandler.refresh_energy_transfer_logs)
     DOOR_UNLOCK         = ApiKey(key="doorunlock",
                                  press_fn=FordpassDataHandler.unlock_vehicle)
     EV_START            = ApiKey(key="evstart",
@@ -363,7 +361,6 @@ EV_ONLY_TAGS: Final = [
     Tag.EV_START,
     Tag.EV_CANCEL,
     Tag.EV_PAUSE,
-    Tag.REFRESH_ETL,
     Tag.ELVEH_TARGET_CHARGE,
     Tag.ELVEH_TARGET_CHARGE_ALT1,
     Tag.ELVEH_TARGET_CHARGE_ALT1,
@@ -840,12 +837,6 @@ BUTTONS = [
         tag=Tag.REQUEST_REFRESH,
         key=Tag.REQUEST_REFRESH.key,
         icon="mdi:car-connected",
-        has_entity_name=True,
-    ),
-    ExtButtonEntityDescription(
-        tag=Tag.REFRESH_ETL,
-        key=Tag.REFRESH_ETL.key,
-        icon="mdi:ev-station",
         has_entity_name=True,
     ),
     ExtButtonEntityDescription(
