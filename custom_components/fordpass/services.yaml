@@ -15,6 +15,9 @@ reload:
 poll_api:
   name: Poll API
   description: "Manually poll API for data update (Warning: doing this too often could result in a ban)"
+refresh_energy_transfer_logs:
+  name: Refresh Energy Transfer Logs
+  description: "Manually refresh energy transfer logs for the active configured vehicle"
 delete_message:
   name: "Delete FordPass Message"
   description: "Delete a Message from the Messages list. Enter a Message ID to delete a specific message"

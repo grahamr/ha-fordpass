@@ -1480,7 +1480,7 @@ class ConnectedFordPassVehicle:
                 if self._energy_transfer_logs_supported:
                     _LOGGER.debug(f"{self.vli}_ws_debounce_update_energy_transfer_logs(): starting the 'update_energy_transfer_logs_int()' update now")
                     success = await self.update_energy_transfer_logs_int()
-                    if success:
+                    if success and self.coordinator is not None:
                         self.coordinator.async_set_updated_data(self._data_container)
 
             except CancelledError:
